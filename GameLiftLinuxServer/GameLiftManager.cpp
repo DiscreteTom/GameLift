@@ -18,7 +18,7 @@ GameLiftManager::GameLiftManager() : mActivated(false), mAcceptedCount(0), mRemo
 
 void GameLiftManager::checkLiveLoop(){
 	while (true){
-		std::this_thread::sleep_for(std::chrono::miliseconds(DEAD_CHECK_INTERVAL));
+		std::this_thread::sleep_for(std::chrono::milliseconds(DEAD_CHECK_INTERVAL));
 		if (std::time(nullptr) - startTime > MINIMAL_ELAPSED_TIME){
 			CheckTerminateGameSession();
 		}
