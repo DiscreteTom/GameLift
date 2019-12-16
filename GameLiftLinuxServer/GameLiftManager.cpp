@@ -3,7 +3,7 @@
 #include "../PacketShare/PacketType.h"
 #include "GameLiftManager.h"
 #include "ClientSession.h"
-#include <time>
+#include <ctime>
 #include <thread>
 
 
