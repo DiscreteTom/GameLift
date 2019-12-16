@@ -1,17 +1,23 @@
 #pragma once
 
-/// Å¸ÀÌ¸Ó ½ÇÇà °£°İ (ms)
+/// íƒ€ì´ë¨¸ ì‹¤í–‰ ê°„ê²© (ms)
 #define POLL_INTERVAL	100
 
-/// ÇÃ·¹ÀÌ¾îÀÇ HeartBeat ÁÖ±â
+/// í”Œë ˆì´ì–´ì˜ HeartBeat ì£¼ê¸°
 #define PLAYER_HEART_BEAT	1000
 
-/// ¼¼¼Çº° send/recv ¹öÆÛ Å©±â
+/// ì„¸ì…˜ë³„ send/recv ë²„í¼ í¬ê¸°
 #define BUFSIZE	(1024*10)
 
-/// ÃÖ´ë µ¿Á¢ Á¦ÇÑ
+/// ìµœëŒ€ ë™ì ‘ ì œí•œ
 #define MAX_CONNECTION	1024
 
 
 /// No GameLift Mode (just for a packet test)
 //#define ECHO_MODE
+
+// dead check interval in ms
+#define DEAD_CHECK_INTERVAL 1000
+
+// minimal elapsed time in seconds
+#define MINIMAL_ELAPSED_TIME 60

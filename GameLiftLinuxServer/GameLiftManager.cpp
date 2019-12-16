@@ -3,12 +3,26 @@
 #include "../PacketShare/PacketType.h"
 #include "GameLiftManager.h"
 #include "ClientSession.h"
+#include <time>
+#include <thread>
 
 
 std::unique_ptr<GameLiftManager> GGameLiftManager(nullptr);
 
 GameLiftManager::GameLiftManager() : mActivated(false), mAcceptedCount(0), mRemovedCount(0)
 {
+	startTime = std::time(nullptr);
+	std::thread t(&GameLiftManager::checkLiveLoop, this);
+	t.detach();
+}
+
+void GameLiftManager::checkLiveLoop(){
+	while (true){
+		std::this_thread::sleep_for(std::chrono::miliseconds(DEAD_CHECK_INTERVAL));
+		if (std::time(nullptr) - startTime > MINIMAL_ELAPSED_TIME){
+			CheckTerminateGameSession();
+		}
+	}
 }
 
 bool GameLiftManager::InitializeGameLift(int listenPort)
@@ -112,7 +126,7 @@ void GameLiftManager::OnProcessTerminate()
 void GameLiftManager::CheckTerminateGameSession()
 {
 	// accepted full, but no ones here
-	if (mAcceptedCount >= MAX_PLAYER_PER_GAME && mRemovedCount >= MAX_PLAYER_PER_GAME)
+	if ((mAcceptedCount >= MAX_PLAYER_PER_GAME && mRemovedCount >= MAX_PLAYER_PER_GAME) || mAcceptedCount == mRemovedCount)
 	{
 		GConsoleLog->PrintOut(true, "[GAMELIFT] Terminate GameSession\n");
 
@@ -120,7 +134,6 @@ void GameLiftManager::CheckTerminateGameSession()
 			
 		Aws::GameLift::Server::ProcessEnding();
 		mActivated = false;
-		
 	}
 }
 

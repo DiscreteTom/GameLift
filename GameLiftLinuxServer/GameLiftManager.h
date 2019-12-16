@@ -3,7 +3,6 @@
 #include <set>
 #include <aws/gamelift/server/model/GameSession.h>
 
-
 struct PacketHeader;
 class GameSession;
 class ClientSession;
@@ -29,12 +28,14 @@ public:
 	
 private:
 	void CheckTerminateGameSession();
+	void checkLiveLoop();
 
 private:
 
 	bool mActivated;
 	int mAcceptedCount; ///< player accepted count after game-session started
 	int mRemovedCount; ///< player removed count
+	int startTime;
 
 	std::set<std::shared_ptr<ClientSession>> mPlayerSessions;
 };
